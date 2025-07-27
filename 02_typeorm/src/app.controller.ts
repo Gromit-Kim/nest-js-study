@@ -24,6 +24,15 @@ export class AppController {
     });
   }
 
+  // @Get('users')
+  // getUsers() {
+  //   return this.userRepository.find({
+  //     select: {
+  //       title: true,
+  //     },
+  //   });
+  // }
+
   @Get('users')
   getUsers() {
     return this.userRepository.find({
