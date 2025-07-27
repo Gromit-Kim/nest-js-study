@@ -27,3 +27,6 @@ out/
 # cache
 .cache/
 .next/
+
+# DB
+postgres-data
