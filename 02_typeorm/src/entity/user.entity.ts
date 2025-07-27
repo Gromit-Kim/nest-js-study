@@ -3,10 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   Generated,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
+import { ProfileModel } from './profile.entity';
 
 export enum Role {
   USER = 'user',
@@ -25,34 +27,37 @@ export class UserModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    // 데이터베이스에서 인지하는 칼럼 타입
-    // 자동으로 추론되어 넣지 않아도 된다.
-    type: 'varchar',
-    // 데이터베이스의 칼럼 이름
-    // 작성하지 않으면 프로퍼티 이름으로 자동 처리됨.
-    name: 'title',
-    // 값의 길이
-    // 입력할 수 있는 글자의 길이가 300
-    length: 300,
-    // null이 가능한지
-    nullable: true,
-    // true면 처음 저장할 때만 값 지정 가능
-    // 이후에는 값 변경 불가능
-    update: false,
-    // default is true
-    // find 관련 실행시 기본으로 값을 불러올지를 정한다.
-    // 만약 false를 하면 기본으로 들어오지 않는다.
-    select: false,
-    //아무것도 입력 안했을 때 기본으로 입력되는 값(생성할 때 사용)
-    default: 'default value',
-    // 컬럼 중에서 유일무이한 값이 되어야 하는지
-    // pk는 기본적으로 unique임.
-    // 회원가입할 때 이메일에 많이 사용한다. (null 도 중복되면 안된다.)
-    // default 는 false
-    unique: false,
-  })
-  title: string;
+  //   @Column({
+  //     // 데이터베이스에서 인지하는 칼럼 타입
+  //     // 자동으로 추론되어 넣지 않아도 된다.
+  //     type: 'varchar',
+  //     // 데이터베이스의 칼럼 이름
+  //     // 작성하지 않으면 프로퍼티 이름으로 자동 처리됨.
+  //     name: 'title',
+  //     // 값의 길이
+  //     // 입력할 수 있는 글자의 길이가 300
+  //     length: 300,
+  //     // null이 가능한지
+  //     nullable: true,
+  //     // true면 처음 저장할 때만 값 지정 가능
+  //     // 이후에는 값 변경 불가능
+  //     update: false,
+  //     // default is true
+  //     // find 관련 실행시 기본으로 값을 불러올지를 정한다.
+  //     // 만약 false를 하면 기본으로 들어오지 않는다.
+  //     select: false,
+  //     //아무것도 입력 안했을 때 기본으로 입력되는 값(생성할 때 사용)
+  //     default: 'default value',
+  //     // 컬럼 중에서 유일무이한 값이 되어야 하는지
+  //     // pk는 기본적으로 unique임.
+  //     // 회원가입할 때 이메일에 많이 사용한다. (null 도 중복되면 안된다.)
+  //     // default 는 false
+  //     unique: false,
+  //   })
+  //   title: string;
+
+  @Column()
+  email: string;
 
   @Column({
     type: 'enum',
@@ -77,4 +82,7 @@ export class UserModel {
   @Column()
   @Generated('uuid') // pk는 아니지만 자동으로 1씩 올라가는 게 increment, uuid를 하면 string으로 타입 변경
   additionalId: string; // number or string
+
+  @OneToOne(() => ProfileModel, (profile) => profile.user)
+  profile: ProfileModel;
 }
