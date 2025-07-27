@@ -1,0 +1,16 @@
+services:
+  postgres: # image 이름과 관계 없이 지어주는 이름
+    image: postgres:15
+    restart: always
+    # docker image안에서 실행or생성된 파일들은 도커 이미지 안에서만 존재한다.
+    # docker를 종료시키면 그 이미지 안에 존재했던 파일들이 날아갈 수 있다.
+    # postgreSQL 안에다가 저장해놨던 데이터를 실제 우리 host OS의 볼륨과 매핑을 해줄 것이다.
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data # 현대 docker-compose 폴더 위치 기준으로 host의 위치: 이미지 안의 위치
+    ports:
+      # host의 5432 포트로 요청하면 이 요청은 image의 5432 port로 들어간다.
+      - '5432:5432' # host port : image port
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
