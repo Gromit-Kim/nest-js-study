@@ -35,6 +35,17 @@ export class UserModel {
     // true면 처음 저장할 때만 값 지정 가능
     // 이후에는 값 변경 불가능
     update: false,
+    // default is true
+    // find 관련 실행시 기본으로 값을 불러올지를 정한다.
+    // 만약 false를 하면 기본으로 들어오지 않는다.
+    select: false,
+    //아무것도 입력 안했을 때 기본으로 입력되는 값(생성할 때 사용)
+    default: 'default value',
+    // 컬럼 중에서 유일무이한 값이 되어야 하는지
+    // pk는 기본적으로 unique임.
+    // 회원가입할 때 이메일에 많이 사용한다. (null 도 중복되면 안된다.)
+    // default 는 false
+    unique: false,
   })
   title: string;
 

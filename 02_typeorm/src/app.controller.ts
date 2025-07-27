@@ -26,7 +26,11 @@ export class AppController {
 
   @Get('users')
   getUsers() {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      select: {
+        title: true,
+      },
+    });
   }
 
   @Patch('users/:id')
