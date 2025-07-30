@@ -3,12 +3,15 @@ import {
   CreateDateColumn,
   Entity,
   Generated,
+  // JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
 import { ProfileModel } from './profile.entity';
+import { PostModel } from './post.entity';
 
 export enum Role {
   USER = 'user',
@@ -84,5 +87,11 @@ export class UserModel {
   additionalId: string; // number or string
 
   @OneToOne(() => ProfileModel, (profile) => profile.user)
+  // @JoinColumn()
   profile: ProfileModel;
+
+  // 1:n과 n:1은 JoinColumn을 할 필요가 없다.
+  // 항상 many의 입장을 가지는 테이블이 상대의 id를 가진다.
+  @OneToMany(() => PostModel, (post) => post.author)
+  posts: PostModel[];
 }
