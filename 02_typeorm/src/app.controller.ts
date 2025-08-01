@@ -255,4 +255,92 @@ export class AppController {
       },
     });
   }
+
+  @Post('sample')
+  async sample(){
+    // 모델에 해당되는 객체 생성 - 저장은 안하고, 객체만 생성한다.
+    const user1 = this.userRepository.create({
+      email: 'test@codefactory.ai',
+    });
+
+    // 아래처럼 할 수도 있지만 userModel은 생성자를 생성하지 않기 때문에 위와 같이 한다. 
+    // new UserModel({
+    //   email: 'test@codefactory.ai'
+    // });
+
+    // 생성 및 저장
+    const user2 = await this.userRepository.save({
+      email: 'test1@codefactory.ai',
+    });
+
+    // preload
+    // 입력된 값을 기반으로 데이터베이스에 있는 데이터를 불러오고
+    // 추가 입력된 값으로 데이터베이스에서 가져온 값들을 대체한다.
+    // 저장하지는 않는다. -> find를 해서 create를 한다. save는 안함
+    const user3 = await this.userRepository.preload({
+      id: 101,
+      email: 'codefactory@cf.ai',
+    });
+
+    // 삭제하기
+    await this.userRepository.delete(101);
+
+    // 이 조건에 해당되는 모든 row의 'count' property를 2만큼 증가시키겠다.
+    await this.userRepository.increment({
+      id: 1,
+    }, 'count', 2);
+
+    await this.userRepository.decrement({
+      id: 2,
+    }, 'count', 1);
+
+    // 갯수 카운팅하기
+    // 대소문자 상관없이 0이라는 문자가 이메일에 들어간 row들의 총 개수
+    const count = await this.userRepository.count({
+      where: {
+        email: ILike('%0%'),
+      },
+    })
+
+    // sum
+    const sum = await this.userRepository.sum('count', {
+      email: ILike('%0%'),
+    });
+
+    // average
+    const average = await this.userRepository.average('count', {
+      id: LessThan(4),
+    });
+
+    // 최소값
+    const min = await this.userRepository.minimum('count', {
+      id: LessThan(4),
+    });
+
+    //최대값
+    const max = await this.userRepository.maximum('count', {
+      id: LessThan(4),
+    });
+
+    const users = await this.userRepository.find({
+      where: {
+
+      }
+    })
+
+    // 여러개가 해당되면 가장 처음값만 가져옴
+    const userOne = await this.userRepository.findOne({
+      where: {
+        id:3,
+      }
+    })
+
+    // pagination할 때 사용
+    // take를 넣지 않았다면 전체에 해당되는 개수가 몇개인지를 알려주는 것임. 
+    const usersAndCount = await this.userRepository.findAndCount({
+      take: 3,
+    })
+
+    return user1;
+  }
 }

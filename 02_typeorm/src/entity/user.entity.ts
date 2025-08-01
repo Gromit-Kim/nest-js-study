@@ -109,4 +109,9 @@ export class UserModel {
   // 항상 many의 입장을 가지는 테이블이 상대의 id를 가진다.
   @OneToMany(() => PostModel, (post) => post.author)
   posts: PostModel[];
+
+  @Column({
+    default: 0,
+  })
+  count: number;
 }
