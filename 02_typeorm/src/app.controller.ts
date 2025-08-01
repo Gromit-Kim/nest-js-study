@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserModel } from './entity/user.entity';
-import { Repository } from 'typeorm';
+import { Between, Equal, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Repository } from 'typeorm';
 import { ProfileModel } from './entity/profile.entity';
 import { PostModel } from './entity/post.entity';
 import { TagModel } from './entity/tag.entity';
@@ -101,13 +101,51 @@ export class AppController {
   }
 
   @Get('users')
-  getUsers() {
+  getUsers(){
     return this.userRepository.find({
-      relations: {
-        profile: true, // profile도 함께 줌.
-      },
-    });
+      where: {
+        // 아닌 경우 가져오기
+        // 1이 아닌 모든 것을 가져온다.
+        // id: Not(1), 
+
+        // 적은 경우 가져오기 - 29까지
+        // id: LessThan(30),
+        // id: LessThanOrEqual(30), // 30까지
+        
+        // 많은 경우
+        // id: MoreThan(30), // 31번 부터
+        // id: MoreThanOrEqual(30), // 30부터
+
+        // 동일
+        // id: Equal(30), // 일반 30과 동일 
+
+        // 유사값 가져오기
+        // email: Like('%google%'), // google 앞 뒤로 어떤 글자가 들어가도 상관없다.
+        
+        // 대문자 소문자 구분 안하는 유사값
+        // email: ILike('%GOOGLE%')
+
+        // 사이값
+        // id: Between(10, 15),
+
+        // 해당되는 여러 개의 값
+        // id: In([1, 2, 4, 99])
+
+        // id가 Null인 경우 가져오기
+        // id: IsNull(), 
+      }
+    })
   }
+
+  // [ Relations에 대해 알아본다. ]
+  // @Get('users')
+  // getUsers() {
+  //   return this.userRepository.find({
+  //     relations: {
+  //       profile: true, // profile도 함께 줌.
+  //     },
+  //   });
+  // }
 
   // @Patch('users/:id')
   // async patchUser(@Param('id') id: string) {
