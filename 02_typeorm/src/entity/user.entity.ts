@@ -88,7 +88,9 @@ export class UserModel {
 
   @OneToOne(() => ProfileModel, (profile) => profile.user, {
     // find() 실행할 때마다 항상 같이 가져올 relation
-    eager: true, // user모델할 때마다 자동으로 profile을 가져온다. (쿼리에서 하지 않아도)
+    eager: true, // user모델할 때마다 자동으로 profile을 가져온다. (쿼리에서 하지 않아도 가져옴, 기본값은 false)
+    // 저장할 때, relation을 한 번에 저장 가능 (default는 true)
+    cascade: false,
   })
   // @JoinColumn()
   profile: ProfileModel;

@@ -72,13 +72,22 @@ export class AppController {
 
   @Post('user/profile')
   async createUserAndProfile() {
+    // const user = await this.userRepository.save({
+    //   email: 'asdf@a.com',
+    // });
+
+    // const profile = await this.profileRepository.save({
+    //   profileImg: 'asdf.jpg',
+    //   user,
+    // });
+
+    // options에서 cascase를 true로 하면
+    // profile도 함께 생성해준다.
     const user = await this.userRepository.save({
       email: 'asdf@a.com',
-    });
-
-    const profile = await this.profileRepository.save({
-      profileImg: 'asdf.jpg',
-      user,
+      profile: {
+        profileImg: 'asdf.jpg',
+      },
     });
   }
 
