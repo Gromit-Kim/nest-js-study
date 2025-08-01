@@ -16,7 +16,7 @@ import { UsersModule } from './users/users.module';
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',
-      entities: [PostsModel],
+      entities: [PostsModel, UsersModule],
       synchronize: true, // develop에서는 true, production에선 false로
     }),
     UsersModule,
