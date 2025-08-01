@@ -74,6 +74,12 @@ export class AppController {
       relations: {
         profile: true,
       },
+
+      // 정렬 방법
+      // 정렬 기준이 되는 프로퍼티를 넣는다.
+      order: {
+        id: 'ASC', // 'DESC'
+      },
     });
   }
 
