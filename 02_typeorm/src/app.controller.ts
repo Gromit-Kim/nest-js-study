@@ -47,6 +47,39 @@ export class AppController {
   @Get('users')
   getUsers() {
     return this.userRepository.find({
+      // 어떤 프로퍼티를 선택할지를 정의한다.
+      // select를 정의하지 않는 경우(default)는
+      // 모든 프로퍼티를 가져온다.
+      // select를 정의하면 select에 정의된 프로퍼티만 가져온다.
+      select: {
+        id: true,
+        // title: true,
+      },
+      // 필터링할 조건을 입력하게 된다.
+      where: {
+        // where 조건은 전부 and 조건으로 묶인다.
+        version: 1, // version이 1인 것만 선택됨
+        // id: 1,
+        profile: {
+          id: true, // 가져오는 관계의 것에 where을 넣는다.
+        },
+      },
+
+      // or로 하고 싶은 경우는 []를 이용한다.
+      // where: {
+      //   [{id: 3}, {version: 3}],
+      // }
+
+      // 관계를 가져오는 방법
+      relations: {
+        profile: true,
+      },
+    });
+  }
+
+  @Get('users')
+  getUsers() {
+    return this.userRepository.find({
       relations: {
         profile: true, // profile도 함께 줌.
       },
