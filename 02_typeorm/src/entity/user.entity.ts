@@ -86,7 +86,10 @@ export class UserModel {
   @Generated('uuid') // pk는 아니지만 자동으로 1씩 올라가는 게 increment, uuid를 하면 string으로 타입 변경
   additionalId: string; // number or string
 
-  @OneToOne(() => ProfileModel, (profile) => profile.user)
+  @OneToOne(() => ProfileModel, (profile) => profile.user, {
+    // find() 실행할 때마다 항상 같이 가져올 relation
+    eager: true, // user모델할 때마다 자동으로 profile을 가져온다. (쿼리에서 하지 않아도)
+  })
   // @JoinColumn()
   profile: ProfileModel;
 
