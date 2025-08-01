@@ -80,6 +80,9 @@ export class AppController {
       order: {
         id: 'ASC', // 'DESC'
       },
+
+      // 처음에 몇 개를 제외할 지
+      skip: 2,
     });
   }
 
