@@ -91,6 +91,8 @@ export class UserModel {
     eager: true, // user모델할 때마다 자동으로 profile을 가져온다. (쿼리에서 하지 않아도 가져옴, 기본값은 false)
     // 저장할 때, relation을 한 번에 저장 가능 (default는 true)
     cascade: false,
+    // nullabl: true
+    nullable: true,
   })
   // @JoinColumn()
   profile: ProfileModel;
