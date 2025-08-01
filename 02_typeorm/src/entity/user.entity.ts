@@ -99,6 +99,7 @@ export class UserModel {
     // set null -> 참조하는 Row에서 참조 id를 null로 변경
     // set default -> 기본 세팅으로 설정(테이블의 기본 셋팅)
     // restrict -> 참조하고 있는 ROw가 있는 경우 참조하는 Row 삭제 불가.
+    // user와 relation을 맺고 있는 profile을 삭제 했을 때, user를 어떻게 할지에 대한 것임.
     onDelete: 'CASCADE',
   })
   // @JoinColumn()
