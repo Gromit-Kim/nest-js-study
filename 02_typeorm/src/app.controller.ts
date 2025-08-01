@@ -28,11 +28,24 @@ export class AppController {
     private readonly tagRepository: Repository<TagModel>,
   ) {}
 
+  // @Post('users')
+  // postUser() {
+  //   return this.userRepository.save({
+  //     // title: 'test title',
+  //   });
+  // }
+
   @Post('users')
   postUser() {
-    return this.userRepository.save({
-      // title: 'test title',
-    });
+    // for dummy data
+    for (let i = 0; i < 100; i++) {
+      await this.userRepository.save({
+        email: `users${id}@google.com`,
+      });
+    // }
+    // return this.userRepository.save({
+    //   // title: 'test title',
+    // });
   }
 
   // @Get('users')
