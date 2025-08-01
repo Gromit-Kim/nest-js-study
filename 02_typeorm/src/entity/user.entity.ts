@@ -93,6 +93,13 @@ export class UserModel {
     cascade: false,
     // nullabl: true
     nullable: true,
+    // on: ~했을 때, => 관계가 삭제되었을 때
+    // no action -> 아무것도 안함
+    // cascase -> 참조하는 Row도 삭제
+    // set null -> 참조하는 Row에서 참조 id를 null로 변경
+    // set default -> 기본 세팅으로 설정(테이블의 기본 셋팅)
+    // restrict -> 참조하고 있는 ROw가 있는 경우 참조하는 Row 삭제 불가.
+    onDelete: 'CASCADE',
   })
   // @JoinColumn()
   profile: ProfileModel;

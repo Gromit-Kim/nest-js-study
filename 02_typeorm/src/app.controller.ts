@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   Inject,
   NotFoundException,
@@ -69,6 +70,11 @@ export class AppController {
   //     title: user.title + '0',
   //   });
   // }
+
+  @Delete('user/profile/:id')
+  async deleteProfile(@Param('id') id: string) {
+    await this.profileRepository.delete(+id);
+  }
 
   @Post('user/profile')
   async createUserAndProfile() {
