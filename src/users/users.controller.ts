@@ -6,6 +6,11 @@ import { Post } from '@nestjs/common/decorators';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  getUsers() {
+    return this.usersService.getAllUsers();
+  }
+
   @Post()
   postUser(
     @Body('nickanme') nickname: string,
