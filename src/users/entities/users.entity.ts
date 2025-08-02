@@ -33,6 +33,8 @@ export class UsersModel {
    * arg1: 연동할 상대방을 반환하는 함수를 표시한다.
    *      이미 리스트라는 걸 알기에 []를 따로 표시하지 않아도 된다.
    * arg2: 앞의 arg1이 리턴한 값을 받아서 연동할 상대방의 프로퍼티를 리턴하는 함수 작성
+   *
+   * List를 반환하므로 nullable option을 사용하지 않아도 된다.
    */
   @OneToMany(() => PostModel, (post) => post.author)
   posts: PostModel[];
