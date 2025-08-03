@@ -5,10 +5,10 @@ import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModel } from './posts/entities/posts.entity';
 import { UsersModule } from './users/users.module';
+import { UsersModel } from './users/entities/users.entity';
 
 @Module({
   imports: [
-    PostsModule,
     TypeOrmModule.forRoot({
       type: 'postgres', // db type
       host: 'localhost',
@@ -16,9 +16,10 @@ import { UsersModule } from './users/users.module';
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',
-      entities: [PostsModel, UsersModule],
+      entities: [PostsModel, UsersModel],
       synchronize: true, // develop에서는 true, production에선 false로
     }),
+    PostsModule,
     UsersModule,
   ],
   controllers: [AppController],
