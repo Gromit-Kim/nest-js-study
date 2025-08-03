@@ -11,7 +11,9 @@ export class PostsService {
   ) {}
 
   async getAllPosts() {
-    return this.postsRepository.find();
+    return this.postsRepository.find({
+      relations: ['author'], // 현재 모델과 관련된 데이터를 전부 가져오게 할 수 있다.
+    });
   }
 
   async getPostById(id: number) {
@@ -19,6 +21,7 @@ export class PostsService {
       where: {
         id,
       },
+      relations: ['author'],
     });
 
     if (!post) {
