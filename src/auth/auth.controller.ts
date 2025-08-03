@@ -10,7 +10,10 @@ export class AuthController {
     // email:password -> base64
     // asdfasdfasdfasdf.asdfasdfasdf.asdfasdf -> email:password
     const token = this.authService.extractTokenFromHeader(rawToken, false);
-    return this.authService.loginWithEmail({ email, password });
+
+    const credentials = this.authService.decodeBasicToken(token);
+
+    return this.authService.loginWithEmail(credentials);
   }
 
   @Post('register/email')
