@@ -1,4 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersModel } from 'src/users/entities/users.entity';
+import { JWT_SECRET } from './const/auth.const';
 
 @Injectable()
 export class AuthService {
@@ -27,4 +30,31 @@ export class AuthService {
    *    3. 모두 통과되면 찾은 사용자 정보 반환
    *    4. loginWithEmail에서 반환된 데이터를 기반으로 토큰 생성
    */
+
+  constructor(private readonly jwtService: JwtService) {}
+
+  /**
+   * Payload에 들어갈 정보
+   * - 민감한 정보는 넣지 않는다.
+   * 1) email
+   * 2) sub -> id (사용자의 id)
+   * 3) type: 'access' | 'refresh'
+   *
+   * {email : string, id: number}
+   *
+   * Pick을 이용해서 context를 이해할 수 있게 된다.
+   */
+  signToken(user: Pick<UsersModel, 'email' | 'id'>, isRefreshToken: boolean) {
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      type: isRefreshToken ? 'refresh' : 'access',
+    };
+
+    return this.jwtService.sign(payload, {
+      secret: JWT_SECRET,
+      // seconds
+      expiresIn: isRefreshToken ? 3600 : 300,
+    });
+  }
 }
