@@ -1,4 +1,3 @@
-import { UserModel } from '02_typeorm/src/entity/user.entity';
 import { UsersModel } from 'src/users/entities/users.entity';
 import {
   Column,
@@ -23,7 +22,7 @@ export class PostsModel {
    * 나중에 PostModel 클래스에서 author 값을 불러올 때 author 값은 유저 모델의 모습으로 대체됨
    * arg3: object로 options을 넣는다.
    */
-  @ManyToOne(() => UserModel, (user) => user.posts, {
+  @ManyToOne(() => UsersModel, (user) => user.posts, {
     nullable: false,
   })
   @JoinColumn()

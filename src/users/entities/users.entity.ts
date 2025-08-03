@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { RolesEnum } from '../const/roles.const';
-import { PostModel } from '02_typeorm/src/entity/post.entity';
+import { PostsModel } from 'src/posts/entities/posts.entity';
 
 @Entity()
 export class UsersModel {
@@ -36,6 +36,6 @@ export class UsersModel {
    *
    * List를 반환하므로 nullable option을 사용하지 않아도 된다.
    */
-  @OneToMany(() => PostModel, (post) => post.author)
-  posts: PostModel[];
+  @OneToMany(() => PostsModel, (post) => post.author)
+  posts: PostsModel[];
 }
