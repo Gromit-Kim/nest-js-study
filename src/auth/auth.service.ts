@@ -59,6 +59,21 @@ export class AuthService {
     return token;
   }
 
+  decodeBasicToken(base64string: string) {
+    const decoded = Buffer.from(base64string, 'base64').toString('utf8');
+
+    const split = decoded.split(':');
+
+    if (split.length != 2) {
+      throw new UnauthorizedException('잘못된 유형의 토큰입니다.');
+    }
+
+    const email = split[0];
+    const password = split[1];
+
+    return { email, password };
+  }
+
   /**
    * 1) registerWithEmail
    *  - email, nickname, password를 입력받고 사용자를 생성한다.
