@@ -13,7 +13,7 @@ export class UsersController {
 
   @Post()
   postUser(
-    @Body('nickanme') nickname: string,
+    @Body('nickname') nickname: string,
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
