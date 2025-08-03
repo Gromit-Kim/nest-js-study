@@ -1,6 +1,12 @@
 import { UserModel } from '02_typeorm/src/entity/user.entity';
 import { UsersModel } from 'src/users/entities/users.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class PostsModel {
@@ -20,6 +26,7 @@ export class PostsModel {
   @ManyToOne(() => UserModel, (user) => user.posts, {
     nullable: false,
   })
+  @JoinColumn()
   author: UsersModel;
 
   @Column()
