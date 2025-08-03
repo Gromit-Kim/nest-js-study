@@ -33,6 +33,13 @@ export class AuthService {
 
   constructor(private readonly jwtService: JwtService) {}
 
+  loginUser(user: Pick<UsersModel, 'email' | 'id'>) {
+    return {
+      accessToken: this.signToken(user, false),
+      refreshToken: this.signToken(user, true),
+    };
+  }
+
   /**
    * Payload에 들어갈 정보
    * - 민감한 정보는 넣지 않는다.
