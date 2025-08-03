@@ -80,6 +80,26 @@ export class AuthService {
     });
   }
 
+  rotateToken(token: string, isRefreshToken: boolean) {
+    const decoded = this.jwtService.verify(token, {
+      secret: JWT_SECRET,
+    });
+
+    /**
+     * Payload에
+     * sub: id
+     * email: email,
+     * type: 'access' | 'refresh'
+     */
+    if (decoded.type !== 'refresh') {
+      throw new UnauthorizedException(
+        '토큰 재발급은 refresh token으로만 가능합니다.',
+      );
+    }
+
+    return this.signToken({ ...decoded }, isRefreshToken);
+  }
+
   /**
    * 1) registerWithEmail
    *  - email, nickname, password를 입력받고 사용자를 생성한다.
