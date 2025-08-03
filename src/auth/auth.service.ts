@@ -74,6 +74,12 @@ export class AuthService {
     return { email, password };
   }
 
+  verifyToken(token: string) {
+    return this.jwtService.verify(token, {
+      secret: JWT_SECRET,
+    });
+  }
+
   /**
    * 1) registerWithEmail
    *  - email, nickname, password를 입력받고 사용자를 생성한다.
