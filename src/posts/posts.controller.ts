@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Patch,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 
@@ -26,8 +27,8 @@ export class PostsController {
   // path parameter가 많아질 수 있으므로 그것은 @Param('id')로 명세해서 구분해야한다. url로부터 가져올 것이고 그 아이디는 id이다.
   //
   @Get(':id')
-  getPost(@Param('id') id: string) {
-    return this.postsService.getPostById(+id);
+  getPost(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.getPostById(id);
   }
 
   // 3)  POST /posts
@@ -45,7 +46,7 @@ export class PostsController {
   //    id에 해당되는 POST를 변경한다.
   @Patch(':id')
   patchPost(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body('title') title?: string,
     @Body('content') content?: string,
   ) {
@@ -55,7 +56,7 @@ export class PostsController {
   // 5) DELETE /posts/:id
   //    id에 해당되는 POST를 삭제한다.
   @Delete(':id')
-  deletePost(@Param('id') id: string) {
+  deletePost(@Param('id', ParseIntPipe) id: string) {
     return this.postsService.deletePost(+id);
   }
 }
