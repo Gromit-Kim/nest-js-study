@@ -38,6 +38,11 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
+  async loginWithEmail(user: Pick<UsersModel, 'email' | 'password'>) {
+    const existingUser = await this.authenticateWithEmailAndPassword(user);
+    return this.loginUser(existingUser);
+  }
+
   loginUser(user: Pick<UsersModel, 'email' | 'id'>) {
     return {
       accessToken: this.signToken(user, false),
