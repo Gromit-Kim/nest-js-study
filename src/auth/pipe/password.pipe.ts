@@ -25,7 +25,7 @@ export class MaxLengthPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     if (value.toString().length > this.length) {
       throw new BadRequestException(
-        `${this.subject}의 최대 길이는 ${this.length}입니다.`,
+        `${this.subject}의 최대 길이는 ${this.length} 입니다.`,
       );
     }
     return value.toString();
@@ -40,5 +40,6 @@ export class MinLengthPipe implements PipeTransform {
     if (value.toString().length < this.length) {
       throw new BadRequestException(`최소 길이는 ${this.length}입니다.`);
     }
+    return value.toString();
   }
 }
