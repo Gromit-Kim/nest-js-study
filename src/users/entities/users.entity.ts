@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { lengthValidationMessage } from 'src/common/validation-message/length-validation.message';
 import { stringValidationMessage } from 'src/common/validation-message/string-validation.message';
+import { emailValidationMesage } from 'src/common/validation-message/email-validation.message';
 
 @Entity()
 export class UsersModel extends BaseModel {
@@ -31,7 +32,12 @@ export class UsersModel extends BaseModel {
   @IsString({
     message: stringValidationMessage,
   })
-  @IsEmail()
+  @IsEmail(
+    {},
+    {
+      message: emailValidationMesage,
+    },
+  )
   email: string;
 
   @Column()
