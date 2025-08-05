@@ -18,9 +18,10 @@ export const User = createParamDecorator(
     }
 
     if (!data) {
-      return user[data]; // data에는 users model의 key값들만 들어갈 수 있다.
+      return user;
     }
 
-    return user;
+    // data에는 users model의 key값들만 들어갈 수 있다.
+    return user[data];
   },
 );
