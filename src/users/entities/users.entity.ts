@@ -27,10 +27,10 @@ export class UsersModel extends BaseModel {
   })
   nickname: string;
 
-  @Expose() // Exclude의 반대로 보여주기 위함.
-  get nicknameAndEmail() {
-    return this.nickname + '/' + this.email;
-  }
+  // @Expose() // Exclude의 반대로 보여주기 위함.
+  // get nicknameAndEmail() {
+  //   return this.nickname + '/' + this.email;
+  // }
 
   @Column({
     unique: true,
