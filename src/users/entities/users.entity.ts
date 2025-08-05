@@ -48,7 +48,23 @@ export class UsersModel extends BaseModel {
   @Length(3, 8, {
     message: lengthValidationMessage,
   })
-  @Exclude()
+  /**
+   * Request
+   * front -> back
+   * plan object (JSON) -> class instance (dto)
+   *
+   * Response
+   * back -> front
+   * class instance(dto) -> plan object(JSON)
+   *
+   * toClassOnly > class instance로 변환될때만 (요청일 때만)
+   * toPlainOnly > plain object로 변환될때만 (응답으로 변환될 때만)
+   *
+   * exclude의 기본값은 요청과 응답 둘다임
+   *
+   * 그런데 우리는 요청에선 받아야함(회원가입 로그인 등)
+   */
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @Column({
