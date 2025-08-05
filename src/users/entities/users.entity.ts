@@ -11,7 +11,7 @@ import {
 import { lengthValidationMessage } from 'src/common/validation-message/length-validation.message';
 import { stringValidationMessage } from 'src/common/validation-message/string-validation.message';
 import { emailValidationMesage } from 'src/common/validation-message/email-validation.message';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
 export class UsersModel extends BaseModel {
@@ -26,6 +26,11 @@ export class UsersModel extends BaseModel {
     message: lengthValidationMessage,
   })
   nickname: string;
+
+  @Expose() // Exclude의 반대로 보여주기 위함.
+  get nicknameAndEmail() {
+    return this.nickname + '/' + this.email;
+  }
 
   @Column({
     unique: true,
