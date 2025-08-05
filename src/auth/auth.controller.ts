@@ -1,10 +1,18 @@
-import { Body, Controller, Post, Headers } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Headers,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   MaxLengthPipe,
   MinLengthPipe,
   PasswordPipe,
 } from './pipe/password.pipe';
+import { BasicTokenGuard } from './guard/basic-token.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -36,7 +44,11 @@ export class AuthController {
   }
 
   @Post('login/email')
-  postLoginEmail(@Headers('authorization') rawToken: string) {
+  @UseGuards(BasicTokenGuard)
+  postLoginEmail(
+    @Headers('authorization') rawToken: string,
+    // @Request() req: object, // 이런식으로 하면 request object를 가져올 수 있다.
+  ) {
     // email:password -> base64
     // asdfasdfasdfasdf.asdfasdfasdf.asdfasdf -> email:password
     const token = this.authService.extractTokenFromHeader(rawToken, false);
