@@ -42,6 +42,7 @@ export class PostsController {
   @Post()
   @UseGuards(AccessTokenGuard)
   postPosts(
+    // @User('id') userId : number,  // (data)를 집어넣어서 데코레이터 사용
     @User() user: UsersModel,
     @Body('title') title: string,
     @Body('content') content: string,
