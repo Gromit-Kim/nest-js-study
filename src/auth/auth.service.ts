@@ -131,7 +131,8 @@ export class AuthService {
    */
 
   async registerWithEmail(
-    user: Pick<UsersModel, 'email' | 'nickname' | 'password'>,
+    user: RegisterUserDto,
+    // user: Pick<UsersModel, 'email' | 'nickname' | 'password'>,
   ) {
     /**
      * arg1: 암호화할 비밀번호
