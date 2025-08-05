@@ -14,7 +14,7 @@ import { emailValidationMesage } from 'src/common/validation-message/email-valid
 import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
-@Exclude() // class 자체에 exclude를 처리할 수 있다. - 개별 프로퍼티에 expose를 처리한다.
+// @Exclude() // class 자체에 exclude를 처리할 수 있다. - 개별 프로퍼티에 expose를 처리한다.
 export class UsersModel extends BaseModel {
   @Column({
     length: 20,
@@ -26,7 +26,7 @@ export class UsersModel extends BaseModel {
   @Length(1, 20, {
     message: lengthValidationMessage,
   })
-  @Expose()
+  // @Expose()
   nickname: string;
 
   // @Expose() // Exclude의 반대로 보여주기 위함.
