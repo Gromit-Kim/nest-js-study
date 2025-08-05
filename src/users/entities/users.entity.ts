@@ -9,6 +9,7 @@ import {
   ValidationArguments,
 } from 'class-validator';
 import { lengthValidationMessage } from 'src/common/validation-message/length-validation.message';
+import { stringValidationMessage } from 'src/common/validation-message/string-validation.message';
 
 @Entity()
 export class UsersModel extends BaseModel {
@@ -16,7 +17,9 @@ export class UsersModel extends BaseModel {
     length: 20,
     unique: true,
   })
-  @IsString() // 제약 사항을 직접 넣어주지 않는 에노테이션은 어떤 값을 넣었는지 순서대로 받아볼 수 없다.
+  @IsString({
+    message: stringValidationMessage,
+  }) // 제약 사항을 직접 넣어주지 않는 에노테이션은 어떤 값을 넣었는지 순서대로 받아볼 수 없다.
   @Length(1, 20, {
     message: lengthValidationMessage,
   })
@@ -25,12 +28,16 @@ export class UsersModel extends BaseModel {
   @Column({
     unique: true,
   })
-  @IsString()
+  @IsString({
+    message: stringValidationMessage,
+  })
   @IsEmail()
   email: string;
 
   @Column()
-  @IsString()
+  @IsString({
+    message: stringValidationMessage,
+  })
   @Length(3, 8, {
     message: lengthValidationMessage,
   })
