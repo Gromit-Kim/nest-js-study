@@ -1,12 +1,24 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Post } from '@nestjs/common/decorators';
+import { Post, UseInterceptors } from '@nestjs/common/decorators';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
+  /**
+   * serialization -> 직렬화 -> 현재 시스템(nestjs)에서 사용되는 데이터의 구조를 다른 시스템에서도 쉽게
+   *                            사용할 수 있는 포맷으로 변환
+   *                        -> class의 object에서 JSON 포맷으로 변환
+   * deserialization -> 역직렬화: JSON to class's object
+   */
   getUsers() {
     return this.usersService.getAllUsers();
   }
