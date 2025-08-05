@@ -6,6 +6,8 @@ export class CreatePostDto {
   })
   title: string;
 
-  @IsString()
+  @IsString({
+    message: 'content는 string 타입을 입력해주어야 합니다.',
+  })
   content: string;
 }
