@@ -10,6 +10,8 @@ import {
   DefaultValuePipe,
   UseGuards,
   Request,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
@@ -25,6 +27,7 @@ export class PostsController {
   // 1) GET /posts
   //    모든 post를 다 가져온다.
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
   getPosts() {
     return this.postsService.getAllPosts();
   }
