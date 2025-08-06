@@ -31,6 +31,15 @@ export class PostsController {
   getPosts(@Query() query: PaginatePostDto) {
     return this.postsService.paginatePosts(query);
   }
+
+  // POST /posts/random
+  @Post('random')
+  @UseGuards(AccessTokenGuard)
+  async postPostsRandom(@User() user: UsersModel) {
+    await this.postsService.generatePosts(user.id);
+    return true;
+  }
+
   // 2) GET /posts/:id
   //    id에 해당되는 post를 가져온다.
   //    예를 들어서 id=1일 경우 id가 1인 포스트를 가져온다.
