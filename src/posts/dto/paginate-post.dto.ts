@@ -4,7 +4,7 @@ import { IsIn, IsNumber, IsOptional } from 'class-validator';
 export class PaginatePostDto {
   // 이전 마지막 데이터의 ID
   // 이 프로퍼티에 입력된 ID 보도 높은 ID 부터 값을 가져오기
-  @Type(() => Number) // transformer
+  //   @Type(() => Number) // transformer 기능
   @IsNumber() // validation 역할이다. 그런데, query param은 항상 string임
   @IsOptional()
   where__id_more_than?: number;
