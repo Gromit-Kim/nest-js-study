@@ -31,6 +31,15 @@ export class PostsService {
 
   // 오름차순으로 정렬하는 pagination만 구현한다.
   async paginatePosts(dto: PaginatePostDto) {
+    if (dto.page) {
+      return this.pagePaginatePosts(dto);
+    }
+    return this.cursorPaginatePosts(dto);
+  }
+
+  async pagePaginatePosts(dto: PaginatePostDto) {}
+
+  async cursorPaginatePosts(dto: PaginatePostDto) {
     const where: FindOptionsWhere<PostsModel> = {};
     if (dto.where__id_less_than) {
       where.id = LessThan(dto.where__id_less_than);
