@@ -37,7 +37,25 @@ export class PostsService {
     return this.cursorPaginatePosts(dto);
   }
 
-  async pagePaginatePosts(dto: PaginatePostDto) {}
+  async pagePaginatePosts(dto: PaginatePostDto) {
+    /**
+     * data: Data[],
+     * total: number
+     * next: ??
+     *
+     * [1] [2] [3] [4] 처럼 페이지가 이미 정해져있다.
+     * 누른 순간 몇 번째 페이지를 요청할 지 알기 때문에 next가 의미가 없고,
+     * [1] 다음에 [2]를 누른다는 보장이 없으므로 next가 필요가 없다.
+     */
+    const posts = await this.postsRepository.find({
+      skip: dto.take * (dto.page! - 1),
+      take: dto.take,
+      order: {
+        createdAt: dto.order__createdAt,
+      },
+    });
+    return { posts };
+  }
 
   async cursorPaginatePosts(dto: PaginatePostDto) {
     const where: FindOptionsWhere<PostsModel> = {};
@@ -91,7 +109,7 @@ export class PostsService {
         }
       }
 
-      let key = null;
+      let key: string | null = null;
       if (dto.order__createdAt === 'ASC') {
         key = 'where__id_more_than';
       } else {
