@@ -47,14 +47,17 @@ export class PostsService {
      * 누른 순간 몇 번째 페이지를 요청할 지 알기 때문에 next가 의미가 없고,
      * [1] 다음에 [2]를 누른다는 보장이 없으므로 next가 필요가 없다.
      */
-    const posts = await this.postsRepository.find({
+    const [posts, count] = await this.postsRepository.findAndCount({
       skip: dto.take * (dto.page! - 1),
       take: dto.take,
       order: {
         createdAt: dto.order__createdAt,
       },
     });
-    return { posts };
+    return {
+      data: posts,
+      total: count,
+    };
   }
 
   async cursorPaginatePosts(dto: PaginatePostDto) {
