@@ -88,7 +88,7 @@ export class CommonService {
       } else if(key.startsWith('order__')){
         order = {
           ...order,
-          ...this.parseOrderFilter(key, value),
+          ...this.parseWhereFilter(key, value),
         }
       }
     }
@@ -101,7 +101,8 @@ export class CommonService {
     }
   }
 
-  private parseWhereFilter<T extends BaseModel>(key: string, value: any) : FindOptionsWhere<T>{
+  private parseWhereFilter<T extends BaseModel>(key: string, value: any) 
+  : FindOptionsWhere<T> | FindOptionsOrder<T>{
     const options : FindOptionsWhere<T> = {};
 
     /**
@@ -164,24 +165,4 @@ export class CommonService {
     return options;
   }
 
-  private parseOrderFilter<T extends BaseModel>(key: string, value: any) : FindOptionsOrder<T>{
-    const order : FindOptionsOrder<T> = {}
-
-    /**
-     * order는 무조건 2개로 쪼개진다.
-     */
-    const split = key.split('__');
-
-    if(split.length !== 2){
-      throw new BadRequestException(
-        `order 필터는 '__'로 split 했을 때 길이가 2여야 합니다. - 문제되는 키값: ${key}`
-      )
-    }
-
-    const [_, field] = split;
-
-    order[field] = value;
-
-    return order;
-  }
 }
