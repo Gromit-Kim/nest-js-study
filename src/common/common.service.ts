@@ -10,5 +10,23 @@ export class CommonService {
     repository: Repository<T>,
     overrideFindOptions: FindManyOptions<T>,
     path: string,
+  ) {
+    if (dto.page) {
+      return this.pagePagiante(dto, repository, overrideFindOptions);
+    }
+    return this.cursorPaginate(dto, repository, overrideFindOptions, path);
+  }
+
+  private async pagePagiante<T extends BaseModel>(
+    dto: BasePaginationDto,
+    repository: Repository<T>,
+    overrideFindOptions: FindManyOptions<T>,
+  ) {}
+
+  private async cursorPaginate<T extends BaseModel>(
+    dto: BasePaginationDto,
+    repository: Repository<T>,
+    overrideFindOptions: FindManyOptions<T>,
+    path: string,
   ) {}
 }
