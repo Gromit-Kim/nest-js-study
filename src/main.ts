@@ -12,6 +12,7 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true, // validator를 기반으로 변형 처리
       },
+      whitelist: true, // validator가 validation decorator가 적용되지 않은 모든 프로퍼티를 삭제한다.
     }),
   );
 
