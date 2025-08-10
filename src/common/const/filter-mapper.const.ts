@@ -20,11 +20,10 @@ import {
  * where__id__not
  *
  * {
- *  where: {
- *      id: Not(value)
+ *  where:{
+ *     id: Not(value)
  *  }
  * }
- *
  */
 export const FILTER_MAPPER = {
   not: Not,
