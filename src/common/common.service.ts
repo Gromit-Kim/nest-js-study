@@ -68,7 +68,7 @@ export class CommonService {
         ? results[results.length - 1]
         : null;
 
-    const nextUrl = lastItem && new URL(`${PROTOCOL}://${HOST}/posts`);
+    const nextUrl = lastItem && new URL(`${PROTOCOL}://${HOST}/${path}`);
     if (nextUrl) {
       for (const key of Object.keys(dto)) {
         if (dto[key]) {
