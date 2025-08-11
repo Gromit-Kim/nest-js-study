@@ -30,3 +30,6 @@ out/
 
 # DB
 postgres-data
+
+# image
+public/posts/*
