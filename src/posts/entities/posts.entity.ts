@@ -34,6 +34,9 @@ export class PostsModel extends BaseModel {
   })
   content: string;
 
+  @Column({ nullable: true })
+  image?: string; // DB에는 이미지를 직접 저장하지 않는다. (이미지의 위치를 저장함)
+
   @Column()
   likeCount: number;
 
