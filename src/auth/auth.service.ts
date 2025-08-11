@@ -1,16 +1,25 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersModel } from 'src/users/entities/users.entity';
-import { HASH_ROUND as HASH_ROUNDS, JWT_SECRET } from './const/auth.const';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { ConfigService } from '@nestjs/config';
+import {
+  ENV_HASH_ROUNDS_KEY,
+  ENV_JWT_SECRET_KEY,
+} from 'src/common/const/env-keys.const';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
@@ -78,7 +87,7 @@ export class AuthService {
   verifyToken(token: string) {
     try {
       return this.jwtService.verify(token, {
-        secret: JWT_SECRET,
+        secret: this.configService.get<string>(ENV_JWT_SECRET_KEY),
       });
     } catch (e) {
       throw new UnauthorizedException('토큰이 만료됐거나 잘못된 토큰입니다.');
@@ -87,7 +96,7 @@ export class AuthService {
 
   rotateToken(token: string, isRefreshToken: boolean) {
     const decoded = this.jwtService.verify(token, {
-      secret: JWT_SECRET,
+      secret: this.configService.get<string>(ENV_JWT_SECRET_KEY),
     });
 
     /**
@@ -140,7 +149,13 @@ export class AuthService {
      * arg2: 해쉬 라운드 : 얼마나 느리게 할 지 (bcrypt -npm docs 참조)
      * salt는 자동 생성된다!
      */
-    const hash = await bcrypt.hash(user.password, HASH_ROUNDS);
+    const hashRounds = this.configService.get<string>(ENV_HASH_ROUNDS_KEY);
+    if (!hashRounds) {
+      throw new NotFoundException(
+        '환경변수에서 HASH_ROUND를 찾을 수 없습니다.',
+      );
+    }
+    const hash = await bcrypt.hash(user.password, parseInt(hashRounds));
 
     const newUser = await this.usersService.createUser({
       ...user,
@@ -181,7 +196,7 @@ export class AuthService {
     };
 
     return this.jwtService.sign(payload, {
-      secret: JWT_SECRET,
+      secret: this.configService.get<string>(ENV_JWT_SECRET_KEY),
       // seconds
       expiresIn: isRefreshToken ? 3600 : 300,
     });
